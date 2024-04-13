@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmlwhho8pla2c"]
+
+[ext_resource type="Script" path="res://summoning/summoning_item.gd" id="1_6vbh6"]
+[ext_resource type="Texture2D" uid="uid://b2iopc2t0ab1v" path="res://assets/sprites/bone.png" id="1_46mjm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6xgi5"]
+radius = 54.5711
+
+[node name="SummoningItem" type="Area2D"]
+script = ExtResource("1_6vbh6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_46mjm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -0.00843567
+shape = SubResource("CircleShape2D_6xgi5")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
