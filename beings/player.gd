@@ -6,6 +6,10 @@ extends CharacterBody2D
 @onready var weapon_start_location = $WeaponLocation.position
 var weapon = null
 
+# Mouse input overrides other input
+var mouse_held : bool = false
+var mouse_position : Vector2 = Vector2.ZERO
+
 var health = 100
 
 # Objective counters
@@ -29,6 +33,13 @@ func add_weapon(new_weapon : PackedScene):
 func get_weapon_input():
 	return Input.get_vector("attack_left", "attack_right", "attack_up", "attack_down")
 
+func _unhandled_input(event):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			mouse_held = true
+		else:
+			mouse_held = false
+
 func get_input():
 	return Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 
@@ -38,7 +49,13 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func _process(_delta):
-	var attack_direction = get_weapon_input()
+	var attack_direction : Vector2 = Vector2.ZERO
+
+	if mouse_held:
+		attack_direction = global_position.direction_to(get_global_mouse_position())
+	else:
+		attack_direction = get_weapon_input()
+
 	if attack_direction != Vector2.ZERO and weapon:
 		var attack_target_position = position + 1000*attack_direction
 		var dir = global_position.direction_to(attack_target_position)

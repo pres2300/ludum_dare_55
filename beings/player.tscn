@@ -31,3 +31,5 @@ curve = SubResource("Curve2D_cuo7b")
 
 [node name="WeaponLocation" type="Marker2D" parent="."]
 position = Vector2(40, 29)
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
