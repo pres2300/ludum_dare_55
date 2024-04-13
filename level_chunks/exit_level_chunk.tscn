@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhrysnpsev661"]
+
+[ext_resource type="PackedScene" uid="uid://ceymffh3drer1" path="res://level_chunks/basic_level_chunk.tscn" id="1_gbuxu"]
+[ext_resource type="PackedScene" uid="uid://uswe2lutcc51" path="res://summoning/summoning_circle.tscn" id="2_rvhfk"]
+
+[node name="ExitLevelChunk" instance=ExtResource("1_gbuxu")]
+
+[node name="SummoningCircle" parent="." index="1" instance=ExtResource("2_rvhfk")]
