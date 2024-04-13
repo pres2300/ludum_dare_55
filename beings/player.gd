@@ -2,25 +2,12 @@ extends CharacterBody2D
 
 @export var move_speed = 500
 
+var health = 100
+
 func get_input():
-	var up = Input.is_action_pressed("ui_up")
-	var down = Input.is_action_pressed("ui_down")
-	var left = Input.is_action_pressed("ui_left")
-	var right = Input.is_action_pressed("ui_right")
+	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 
-	velocity = Vector2.ZERO
-
-	if up:
-		velocity.y = -move_speed
-
-	if down:
-		velocity.y = move_speed
-
-	if left:
-		velocity.x = -move_speed
-
-	if right:
-		velocity.x = move_speed
+	velocity = input_direction*move_speed
 
 func _physics_process(_delta):
 	get_input()
