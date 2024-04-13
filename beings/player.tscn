@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmvqukohii4bj"]
+
+[ext_resource type="Texture2D" uid="uid://fxki243kwaaq" path="res://assets/sprites/corrupted.png" id="1_8tsdq"]
+[ext_resource type="Script" path="res://beings/player.gd" id="1_76jon"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lgq00"]
+radius = 12.0
+height = 48.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_76jon")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_8tsdq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_lgq00")
+
+[node name="Camera2D" type="Camera2D" parent="."]
