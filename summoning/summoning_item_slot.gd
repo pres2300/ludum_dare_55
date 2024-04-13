@@ -14,5 +14,6 @@ func _on_body_entered(body):
 		if body.drop_summoning_item() == true:
 			sprite.texture = selected_texture
 			is_activated = true
+			$ActivateSound.play()
 			selected.emit()
 

@@ -17,6 +17,7 @@ var current_summoning_items : int = 0
 
 func pickup_summoning_item():
 	current_summoning_items += 1
+	$PickupSound.play()
 
 func drop_summoning_item():
 	if current_summoning_items > 0:

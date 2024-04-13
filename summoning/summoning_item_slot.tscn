@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b3mqcphhmmudw"]
+[gd_scene load_steps=5 format=3 uid="uid://b3mqcphhmmudw"]
 
 [ext_resource type="Script" path="res://summoning/summoning_item_slot.gd" id="1_vml6u"]
 [ext_resource type="Texture2D" uid="uid://c2dna44i4nyby" path="res://assets/sprites/unbone.png" id="2_suprw"]
+[ext_resource type="AudioStream" uid="uid://cse5krjo8h3o8" path="res://assets/sounds/item_drop.mp3" id="3_67kuh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53y1l"]
 size = Vector2(96, 94)
@@ -15,5 +16,8 @@ texture = ExtResource("2_suprw")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -2)
 shape = SubResource("RectangleShape2D_53y1l")
+
+[node name="ActivateSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_67kuh")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
