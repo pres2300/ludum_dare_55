@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://beings/player.gd" id="1_76jon"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lgq00"]
-radius = 12.0
-height = 48.0
+radius = 47.0
+height = 168.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_76jon")
@@ -14,6 +14,8 @@ script = ExtResource("1_76jon")
 texture = ExtResource("1_8tsdq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 5)
 shape = SubResource("CapsuleShape2D_lgq00")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)

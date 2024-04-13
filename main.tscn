@@ -1,0 +1,16 @@
+[gd_scene load_steps=6 format=3 uid="uid://dnx1u4ln3jef0"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_epk5f"]
+[ext_resource type="PackedScene" uid="uid://bhrysnpsev661" path="res://level_chunks/exit_level_chunk.tscn" id="2_dw43q"]
+[ext_resource type="PackedScene" uid="uid://db2w8n3k8bg5s" path="res://level_chunks/spawn_level_chunk.tscn" id="3_8v1iv"]
+[ext_resource type="PackedScene" uid="uid://ceymffh3drer1" path="res://level_chunks/basic_level_chunk.tscn" id="4_yrg3o"]
+[ext_resource type="PackedScene" uid="uid://dmvqukohii4bj" path="res://beings/player.tscn" id="5_oop7f"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_epk5f")
+exit_chunk_scene = ExtResource("2_dw43q")
+spawn_chunk_scene = ExtResource("3_8v1iv")
+basic_chunk_scene = ExtResource("4_yrg3o")
+player_scene = ExtResource("5_oop7f")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]

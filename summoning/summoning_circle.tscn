@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://uswe2lutcc51"]
+
+[ext_resource type="Texture2D" uid="uid://pj478jq6pa02" path="res://assets/sprites/summoning_circle.png" id="1_dpwt1"]
+[ext_resource type="PackedScene" uid="uid://b3mqcphhmmudw" path="res://summoning/summoning_item_slot.tscn" id="2_s5whh"]
+
+[node name="SummoningCircle" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("1_dpwt1")
+
+[node name="SummoningItemSlot" parent="." instance=ExtResource("2_s5whh")]
+position = Vector2(970, 203)
+
+[node name="SummoningItemSlot2" parent="." instance=ExtResource("2_s5whh")]
+position = Vector2(642, 422)
+
+[node name="SummoningItemSlot3" parent="." instance=ExtResource("2_s5whh")]
+position = Vector2(1276, 425)
+
+[node name="SummoningItemSlot4" parent="." instance=ExtResource("2_s5whh")]
+position = Vector2(727, 789)
+
+[node name="SummoningItemSlot5" parent="." instance=ExtResource("2_s5whh")]
+position = Vector2(1193, 787)

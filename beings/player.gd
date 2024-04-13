@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var move_speed = 150
+@export var move_speed = 500
 
 func get_input():
 	var up = Input.is_action_pressed("ui_up")
@@ -22,6 +22,6 @@ func get_input():
 	if right:
 		velocity.x = move_speed
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	get_input()
 	move_and_slide()

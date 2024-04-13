@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3mqcphhmmudw"]
+
+[ext_resource type="Script" path="res://summoning/summoning_item_slot.gd" id="1_vml6u"]
+[ext_resource type="Texture2D" uid="uid://c2dna44i4nyby" path="res://assets/sprites/unbone.png" id="2_suprw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_53y1l"]
+size = Vector2(96, 94)
+
+[node name="SummoningItemSlot" type="Area2D"]
+script = ExtResource("1_vml6u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_suprw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -2)
+shape = SubResource("RectangleShape2D_53y1l")
