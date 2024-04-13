@@ -29,9 +29,8 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 	queue_free()
 
 func _on_body_entered(body):
-	pass
 	#if body.is_dead() or body == weilder:
 		#return
 #
-	#body.take_damage(damage)
-	#queue_free()
+	body.take_damage(damage)
+	queue_free()

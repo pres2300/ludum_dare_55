@@ -11,8 +11,11 @@ extends Node
 @export var summoning_item_scene: PackedScene
 @export var player_scene : PackedScene
 @export var pistol : PackedScene
+@export var enemy_scene : PackedScene
 
 const required_summoning_items : int = 5
+const num_summoning_item_spawns : int = 5
+const num_enemy_spawns : int = 5
 var placed_summoning_items : int = 0
 
 var player = null
@@ -68,8 +71,16 @@ func _ready():
 	player.add_weapon(pistol)
 
 	# Add rondomly placed summoning items
-	for i in range(5):
+	for i in range(num_summoning_item_spawns):
 		var summoning_item = summoning_item_scene.instantiate()
 		add_child(summoning_item)
 		var random_pos = Vector2(randi_range(0, item_spawn_max_position.x), randi_range(item_spawn_max_position.y, 0))
 		summoning_item.global_position = random_pos
+
+	# Add randomly placed enemies
+	for i in range(num_enemy_spawns):
+		var enemy = enemy_scene.instantiate()
+		add_child(enemy)
+		var random_pos = Vector2(randi_range(0, item_spawn_max_position.x), randi_range(item_spawn_max_position.y, 0))
+		enemy.global_position = random_pos
+		enemy.set_target(player)
