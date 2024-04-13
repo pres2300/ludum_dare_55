@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://bx7ydd3l41web"]
+
+[ext_resource type="PackedScene" uid="uid://cb6e600qb0b7l" path="res://weapons/range_weapons/range_weapon_base.tscn" id="1_8oqiw"]
+[ext_resource type="Script" path="res://weapons/range_weapons/pistol.gd" id="2_af6u4"]
+[ext_resource type="PackedScene" uid="uid://brux58qqc6e2d" path="res://weapons/range_weapons/projectile.tscn" id="3_ebdbu"]
+[ext_resource type="Texture2D" uid="uid://c768c44amxqr0" path="res://assets/sprites/Pistol.png" id="3_su7em"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aqouk"]
+size = Vector2(63, 40)
+
+[node name="Pistol" instance=ExtResource("1_8oqiw")]
+script = ExtResource("2_af6u4")
+projectile_scene = ExtResource("3_ebdbu")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("3_su7em")
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0.5, -2)
+shape = SubResource("RectangleShape2D_aqouk")
+
+[node name="Muzzle" parent="." index="2"]
+position = Vector2(28, -16)
+
+[node name="Hold" parent="." index="3"]
+position = Vector2(-21, 3)
