@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmvqukohii4bj"]
+[gd_scene load_steps=5 format=3 uid="uid://dmvqukohii4bj"]
 
 [ext_resource type="Texture2D" uid="uid://fxki243kwaaq" path="res://assets/sprites/corrupted.png" id="1_8tsdq"]
 [ext_resource type="Script" path="res://beings/player.gd" id="1_76jon"]
@@ -6,6 +6,12 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lgq00"]
 radius = 47.0
 height = 168.0
+
+[sub_resource type="Curve2D" id="Curve2D_cuo7b"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -2, -82, 0, 0, 0, 0, 35, -63, 0, 0, 0, 0, 46, -3, 0, 0, 0, 0, 41, 62, 0, 0, 0, 0, -1, 90, 0, 0, 0, 0, -46, 62, 0, 0, 0, 0, -51, -7, 0, 0, 0, 0, -37, -65, 0, 0, 0, 0, -2, -82)
+}
+point_count = 9
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_76jon")
@@ -19,3 +25,9 @@ shape = SubResource("CapsuleShape2D_lgq00")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
+
+[node name="WeaponPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_cuo7b")
+
+[node name="WeaponLocation" type="Marker2D" parent="."]
+position = Vector2(40, 29)

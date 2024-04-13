@@ -10,6 +10,7 @@ extends Node
 @export var basic_chunk_scene : PackedScene
 @export var summoning_item_scene: PackedScene
 @export var player_scene : PackedScene
+@export var pistol : PackedScene
 
 const required_summoning_items : int = 5
 var placed_summoning_items : int = 0
@@ -64,6 +65,7 @@ func _ready():
 	player = player_scene.instantiate()
 	add_child(player)
 	player.global_position = player_spawn_position
+	player.add_weapon(pistol)
 
 	# Add rondomly placed summoning items
 	for i in range(5):
