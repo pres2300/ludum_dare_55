@@ -1,25 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://uswe2lutcc51"]
+[gd_scene load_steps=4 format=3 uid="uid://uswe2lutcc51"]
 
 [ext_resource type="Texture2D" uid="uid://pj478jq6pa02" path="res://assets/sprites/summoning_circle.png" id="1_dpwt1"]
+[ext_resource type="Script" path="res://summoning/summoning_circle.gd" id="1_lk6e4"]
 [ext_resource type="PackedScene" uid="uid://b3mqcphhmmudw" path="res://summoning/summoning_item_slot.tscn" id="2_s5whh"]
 
 [node name="SummoningCircle" type="Node2D"]
+script = ExtResource("1_lk6e4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(960, 540)
 texture = ExtResource("1_dpwt1")
 
-[node name="SummoningItemSlot" parent="." instance=ExtResource("2_s5whh")]
-position = Vector2(970, 203)
+[node name="SummoningItemSlots" type="Node2D" parent="."]
+position = Vector2(960, 540)
 
-[node name="SummoningItemSlot2" parent="." instance=ExtResource("2_s5whh")]
-position = Vector2(642, 422)
+[node name="SummoningItemSlot1" parent="SummoningItemSlots" instance=ExtResource("2_s5whh")]
+position = Vector2(10, -337)
 
-[node name="SummoningItemSlot3" parent="." instance=ExtResource("2_s5whh")]
-position = Vector2(1276, 425)
+[node name="SummoningItemSlot2" parent="SummoningItemSlots" instance=ExtResource("2_s5whh")]
+position = Vector2(-318, -118)
 
-[node name="SummoningItemSlot4" parent="." instance=ExtResource("2_s5whh")]
-position = Vector2(727, 789)
+[node name="SummoningItemSlot3" parent="SummoningItemSlots" instance=ExtResource("2_s5whh")]
+position = Vector2(316, -115)
 
-[node name="SummoningItemSlot5" parent="." instance=ExtResource("2_s5whh")]
-position = Vector2(1193, 787)
+[node name="SummoningItemSlot4" parent="SummoningItemSlots" instance=ExtResource("2_s5whh")]
+position = Vector2(-233, 249)
+
+[node name="SummoningItemSlot5" parent="SummoningItemSlots" instance=ExtResource("2_s5whh")]
+position = Vector2(233, 247)
