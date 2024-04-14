@@ -6,6 +6,8 @@ extends CharacterBody2D
 
 @onready var health_bar = $HealthBar
 @onready var sprite = $Sprite2D
+@onready var effect_popup_location = $EffectPopupLocation.position
+@onready var effect_popup = load("res://hud/effect_popup.tscn")
 
 var can_move : bool = false
 var bounce_back : bool = false
@@ -56,9 +58,35 @@ func take_damage(damage):
 
 	health_bar.show()
 	health -= damage
+
+	if effect_popup:
+		show_effect("Damage", damage)
+
 	if health <= 0:
 		enemy_state = STATE.DEAD
 		die()
+
+func show_effect(type, value):
+	var effect_popup_inst = effect_popup.instantiate()
+	effect_popup_inst.position = effect_popup_location
+	add_child(effect_popup_inst)
+
+	var color = Color(0, 0, 0)
+	var is_buff = false
+	var is_crit = false
+	match type:
+		"Energy":
+			color = Color(0.02221715450287, 0.25769451260567, 1)
+			is_buff = true
+		"Health":
+			color = Color(0, 0.6627277135849, 0.00000154018403)
+			is_buff = true
+		"Damage":
+			color = Color(0.859, 0.678, 0)
+		_:
+			color = Color(0, 0.6627277135849, 0.00000154018403)
+			is_buff = true
+	effect_popup_inst.show_value(value, is_crit, is_buff, color)
 
 func _ready():
 	health_bar.max_value = max_health

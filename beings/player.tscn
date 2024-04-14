@@ -34,6 +34,9 @@ curve = SubResource("Curve2D_cuo7b")
 [node name="WeaponLocation" type="Marker2D" parent="."]
 position = Vector2(40, 29)
 
+[node name="EffectPopupLocation" type="Marker2D" parent="."]
+position = Vector2(-44, -33)
+
 [node name="PickupSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_bq1iq")
 

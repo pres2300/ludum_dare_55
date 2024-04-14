@@ -3,6 +3,8 @@ extends CharacterBody2D
 @export var move_speed = 500
 
 @onready var camera = $Camera2D
+@onready var effect_popup_location = $EffectPopupLocation.position
+@onready var effect_popup = load("res://hud/effect_popup.tscn")
 
 @onready var weapon_path = $WeaponPath
 @onready var weapon_start_location = $WeaponLocation.position
@@ -42,6 +44,10 @@ func take_damage(damage):
 
 	health -= damage
 	player_health_changed.emit(health)
+
+	if effect_popup:
+		show_effect("Damage", damage)
+
 	if health <= 0:
 		player_state = STATE.DEAD
 		die()
@@ -65,6 +71,28 @@ func add_weapon(new_weapon : PackedScene):
 
 func get_weapon_input():
 	return Input.get_vector("attack_left", "attack_right", "attack_up", "attack_down")
+
+func show_effect(type, value):
+	var effect_popup_inst = effect_popup.instantiate()
+	effect_popup_inst.position = effect_popup_location
+	add_child(effect_popup_inst)
+
+	var color = Color(0, 0, 0)
+	var is_buff = false
+	var is_crit = false
+	match type:
+		"Energy":
+			color = Color(0.02221715450287, 0.25769451260567, 1)
+			is_buff = true
+		"Health":
+			color = Color(0, 0.6627277135849, 0.00000154018403)
+			is_buff = true
+		"Damage":
+			color = Color(0.859, 0.678, 0)
+		_:
+			color = Color(0, 0.6627277135849, 0.00000154018403)
+			is_buff = true
+	effect_popup_inst.show_value(value, is_crit, is_buff, color)
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
