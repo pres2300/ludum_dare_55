@@ -21,15 +21,23 @@ const num_summoning_item_spawns : int = 5
 const num_enemy_spawns : int = 2
 var placed_summoning_items : int = 0
 
-
 var summoning_circle = null
 var player = null
+
+# Level stats
+var current_level : int = 1
 
 func spawn_boss():
 	var boss = boss_scene.instantiate()
 	add_child(boss)
 	boss.set_target(player)
 	boss.global_position = summoning_circle.boss_spawn_location.global_position
+
+func _summoning_item_collected():
+	hud.increment_summon_items_collected()
+
+func _player_health_changed(health):
+	hud.set_player_health(health)
 
 func _ready():
 	# Build the level
@@ -85,6 +93,9 @@ func _ready():
 	player.global_position = player_spawn_position
 	player.add_weapon(pistol)
 	player.set_camera_limit(0, 1080*level_height, 0, 1920*level_width)
+	player.summoning_item_collected.connect(_summoning_item_collected)
+	player.player_health_changed.connect(_player_health_changed)
+	hud.set_player_health(player.health)
 
 	# Add rondomly placed summoning items
 	for i in range(num_summoning_item_spawns):

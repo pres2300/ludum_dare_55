@@ -1,9 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://cg56pipj6jxvo"]
+[gd_scene load_steps=9 format=3 uid="uid://cg56pipj6jxvo"]
 
 [ext_resource type="FontFile" uid="uid://cyo4r1idgb4cp" path="res://assets/fonts/Kenney Thick.ttf" id="1_m1lpl"]
 [ext_resource type="Script" path="res://hud/hud.gd" id="1_ouyla"]
+[ext_resource type="Texture2D" uid="uid://ddwbfmgeq1rpp" path="res://assets/progress_bar/ProgressBar_Over.png" id="3_nqldp"]
+[ext_resource type="Texture2D" uid="uid://di5xi5ouir0kj" path="res://assets/progress_bar/ProgressBar_Green.png" id="4_7ssig"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_s7jdh"]
+font = ExtResource("1_m1lpl")
+font_size = 32
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5hh0i"]
+font = ExtResource("1_m1lpl")
+font_size = 32
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_yodbg"]
+font = ExtResource("1_m1lpl")
+font_size = 32
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xiegl"]
 font = ExtResource("1_m1lpl")
 font_size = 32
 outline_size = 3
@@ -14,17 +34,77 @@ process_mode = 3
 script = ExtResource("1_ouyla")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 86.0
 grow_horizontal = 2
-theme_override_constants/margin_top = 50
+theme_override_constants/margin_top = 20
 
 [node name="Paused" type="Label" parent="MarginContainer"]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 4
 text = "Paused"
 label_settings = SubResource("LabelSettings_s7jdh")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/margin_left = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Level: "
+label_settings = SubResource("LabelSettings_5hh0i")
+
+[node name="LevelNumber" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "1"
+label_settings = SubResource("LabelSettings_yodbg")
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_right = 20
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="SummonItemsCollected" type="Label" parent="MarginContainer/MarginContainer2/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "0"
+label_settings = SubResource("LabelSettings_xiegl")
+
+[node name="Slash" type="Label" parent="MarginContainer/MarginContainer2/HBoxContainer2"]
+layout_mode = 2
+text = "/"
+label_settings = SubResource("LabelSettings_xiegl")
+
+[node name="SummonItemsNeeded" type="Label" parent="MarginContainer/MarginContainer2/HBoxContainer2"]
+layout_mode = 2
+text = "5"
+label_settings = SubResource("LabelSettings_xiegl")
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="PlayerHealth" type="TextureProgressBar" parent="MarginContainer2"]
+layout_mode = 2
+texture_over = ExtResource("3_nqldp")
+texture_progress = ExtResource("4_7ssig")

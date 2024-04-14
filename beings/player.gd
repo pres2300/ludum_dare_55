@@ -20,6 +20,9 @@ var current_summoning_items : int = 0
 enum STATE { ALIVE, DEAD }
 var player_state = STATE.ALIVE
 
+signal summoning_item_collected
+signal player_health_changed
+
 func set_camera_limit(top, bottom, left, right):
 	print("Top: ", top)
 	print("bottom: ", bottom)
@@ -38,6 +41,7 @@ func take_damage(damage):
 		return
 
 	health -= damage
+	player_health_changed.emit(health)
 	if health <= 0:
 		player_state = STATE.DEAD
 		die()
@@ -45,6 +49,7 @@ func take_damage(damage):
 func pickup_summoning_item():
 	current_summoning_items += 1
 	$PickupSound.play()
+	summoning_item_collected.emit()
 
 func drop_summoning_item():
 	if current_summoning_items > 0:
