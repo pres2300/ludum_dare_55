@@ -8,6 +8,12 @@ var base_damage = 5
 
 var attack_timer = Timer.new()
 
+signal boss_dead
+
+func die():
+	super()
+	boss_dead.emit()
+
 func _ready():
 	super()
 	attack_timer.wait_time = 1.0/attack_rate

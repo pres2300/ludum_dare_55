@@ -32,12 +32,20 @@ func spawn_boss():
 	add_child(boss)
 	boss.set_target(player)
 	boss.global_position = summoning_circle.boss_spawn_location.global_position
+	boss.boss_dead.connect(_show_portal)
+
+func show_portal():
+	summoning_circle.add_portal()
+	summoning_circle.portal.next_level.connect(_next_level)
 
 func _summoning_item_collected():
 	hud.increment_summon_items_collected()
 
 func _player_health_changed(health):
 	hud.set_player_health(health)
+
+func _next_level():
+	print("Next level")
 
 func _ready():
 	# Build the level
@@ -83,8 +91,6 @@ func _ready():
 				current_chunk_position.y = j*add_chunk.bg.texture.get_height()
 				add_chunk.position = current_chunk_position
 
-			print("current_chunk_position: ", current_chunk_position, "current_chunk: ", current_chunk)
-
 			current_chunk += 1
 
 	# Add the player
@@ -114,3 +120,6 @@ func _ready():
 
 func _spawn_boss():
 	call_deferred("spawn_boss")
+
+func _show_portal():
+	call_deferred("show_portal")

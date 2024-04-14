@@ -26,10 +26,6 @@ signal summoning_item_collected
 signal player_health_changed
 
 func set_camera_limit(top, bottom, left, right):
-	print("Top: ", top)
-	print("bottom: ", bottom)
-	print("left: ", left)
-	print("right :", right)
 	camera.limit_top = top
 	camera.limit_bottom = bottom
 	camera.limit_left = left
