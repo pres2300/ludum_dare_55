@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cb8ywveoe3u1a"]
+
+[ext_resource type="Script" path="res://custom_sounds/damage_taken_sound.gd" id="1_b7urt"]
+
+[node name="DamageTakenSound" type="AudioStreamPlayer2D"]
+attenuation = 2.08442e-05
+script = ExtResource("1_b7urt")

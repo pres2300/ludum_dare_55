@@ -5,6 +5,9 @@ extends CharacterBody2D
 @onready var camera = $Camera2D
 @onready var effect_popup_location = $EffectPopupLocation.position
 @onready var effect_popup = load("res://hud/effect_popup.tscn")
+@onready var damage_sound = $DamageTakenSound
+@onready var sprite = $Sprite2D
+@onready var collision = $CollisionShape2D
 
 @onready var weapon_path = $WeaponPath
 @onready var weapon_start_location = $WeaponLocation.position
@@ -24,6 +27,7 @@ var player_state = STATE.ALIVE
 
 signal summoning_item_collected
 signal player_health_changed
+signal player_died
 
 func set_camera_limit(top, bottom, left, right):
 	camera.limit_top = top
@@ -31,13 +35,23 @@ func set_camera_limit(top, bottom, left, right):
 	camera.limit_left = left
 	camera.limit_right = right
 
+func is_dead():
+	if player_state == STATE.DEAD:
+		return true
+	else:
+		return false
+
 func die():
-	queue_free()
+	player_state = STATE.DEAD
+	sprite.rotate(PI/2)
+	collision.disabled = true
+	player_died.emit()
 
 func take_damage(damage):
-	if player_state == STATE.DEAD:
+	if is_dead():
 		return
 
+	damage_sound.play_random_sound()
 	health -= damage
 	player_health_changed.emit(health)
 
@@ -90,22 +104,31 @@ func show_effect(type, value):
 			is_buff = true
 	effect_popup_inst.show_value(value, is_crit, is_buff, color)
 
+func get_input():
+	return Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+
 func _unhandled_input(event):
+	if is_dead():
+		return
+
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			mouse_held = true
 		else:
 			mouse_held = false
 
-func get_input():
-	return Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-
 func _physics_process(_delta):
+	if is_dead():
+		return
+
 	var input_direction = get_input()
 	velocity = input_direction*move_speed
 	move_and_slide()
 
 func _process(_delta):
+	if is_dead():
+		return
+
 	var attack_direction : Vector2 = Vector2.ZERO
 
 	if mouse_held:
