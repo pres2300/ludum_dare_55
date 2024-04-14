@@ -9,15 +9,10 @@ extends Area2D
 # Stats
 var fire_rate = 1.0 # shots per second
 var base_damage = 5
-var accuracy = 0.1 # +/- range to rotate
 
 var shooting = false
 var shoot_timer = Timer.new()
 var flip_h = false : set = set_flip_h
-var weilder = null : set = set_weilder
-
-func set_weilder(new_weilder):
-	weilder = new_weilder
 
 func set_target_rotation(angle):
 	if flip_h:

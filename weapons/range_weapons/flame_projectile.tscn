@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cekshjyaheo7i"]
+
+[ext_resource type="PackedScene" uid="uid://brux58qqc6e2d" path="res://weapons/range_weapons/projectile.tscn" id="1_4ytgp"]
+[ext_resource type="Texture2D" uid="uid://d1nmmcyd8dxhy" path="res://assets/sprites/flame.png" id="2_tjbpc"]
+
+[node name="FlameProjectile" instance=ExtResource("1_4ytgp")]
+collision_layer = 2
+collision_mask = 1
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_tjbpc")

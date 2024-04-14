@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dnx1u4ln3jef0"]
+[gd_scene load_steps=10 format=3 uid="uid://dnx1u4ln3jef0"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_epk5f"]
 [ext_resource type="PackedScene" uid="uid://bhrysnpsev661" path="res://level_chunks/exit_level_chunk.tscn" id="2_dw43q"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dmvqukohii4bj" path="res://beings/player.tscn" id="5_oop7f"]
 [ext_resource type="PackedScene" uid="uid://bx7ydd3l41web" path="res://weapons/range_weapons/pistol.tscn" id="7_p3ta8"]
 [ext_resource type="PackedScene" uid="uid://51g0cpbtfbup" path="res://beings/enemy_pawn.tscn" id="8_foe20"]
+[ext_resource type="PackedScene" uid="uid://l4joj2djtev4" path="res://beings/enemy_boss.tscn" id="9_ije3i"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_epk5f")
@@ -18,5 +19,6 @@ summoning_item_scene = ExtResource("5_1y0gu")
 player_scene = ExtResource("5_oop7f")
 pistol = ExtResource("7_p3ta8")
 enemy_scene = ExtResource("8_foe20")
+boss_scene = ExtResource("9_ije3i")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

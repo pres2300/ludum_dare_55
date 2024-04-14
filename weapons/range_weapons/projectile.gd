@@ -4,10 +4,8 @@ extends Area2D
 
 var velocity = Vector2.ZERO
 var damage = 5 : set = set_damage
-var weilder = null
 
-func start(_transform, flip_h, new_weilder):
-	weilder = new_weilder
+func start(_transform, flip_h):
 	# Only get the origin and rotation of the _transform to avoid scale issues
 	position = _transform.get_origin()
 	if flip_h:

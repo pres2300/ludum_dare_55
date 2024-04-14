@@ -28,3 +28,6 @@ position = Vector2(-233, 249)
 
 [node name="SummoningItemSlot5" parent="SummoningItemSlots" instance=ExtResource("2_s5whh")]
 position = Vector2(233, 247)
+
+[node name="BossSpawnLocation" type="Marker2D" parent="."]
+position = Vector2(966, 525)

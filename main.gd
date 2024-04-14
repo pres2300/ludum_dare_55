@@ -1,7 +1,9 @@
 extends Node
 
-@export var max_level_width : int = 5
-@export var max_level_height : int = 5
+#@export var max_level_width : int = 5
+#@export var max_level_height : int = 5
+@export var max_level_width : int = 2
+@export var max_level_height : int = 2
 @export var min_level_width : int = 2
 @export var min_level_height : int = 2
 
@@ -12,13 +14,21 @@ extends Node
 @export var player_scene : PackedScene
 @export var pistol : PackedScene
 @export var enemy_scene : PackedScene
+@export var boss_scene : PackedScene
 
 const required_summoning_items : int = 5
 const num_summoning_item_spawns : int = 5
-const num_enemy_spawns : int = 5
+const num_enemy_spawns : int = 2
 var placed_summoning_items : int = 0
 
+var summoning_circle = null
 var player = null
+
+func spawn_boss():
+	var boss = boss_scene.instantiate()
+	add_child(boss)
+	boss.set_target(player)
+	boss.global_position = summoning_circle.boss_spawn_location.global_position
 
 func _ready():
 	# Build the level
@@ -55,6 +65,8 @@ func _ready():
 				current_chunk_position.x = i*add_chunk.bg.texture.get_width()
 				current_chunk_position.y = -j*add_chunk.bg.texture.get_height()
 				add_chunk.position = current_chunk_position
+				summoning_circle = add_chunk.summoning_circle
+				summoning_circle.spawn_boss.connect(_spawn_boss)
 			else:
 				add_chunk = basic_chunk_scene.instantiate()
 				add_child(add_chunk)
@@ -84,3 +96,6 @@ func _ready():
 		var random_pos = Vector2(randi_range(0, item_spawn_max_position.x), randi_range(item_spawn_max_position.y, 0))
 		enemy.global_position = random_pos
 		enemy.set_target(player)
+
+func _spawn_boss():
+	call_deferred("spawn_boss")

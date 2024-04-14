@@ -15,6 +15,21 @@ var health = 100
 # Objective counters
 var current_summoning_items : int = 0
 
+enum STATE { ALIVE, DEAD }
+var player_state = STATE.ALIVE
+
+func die():
+	queue_free()
+
+func take_damage(damage):
+	if player_state == STATE.DEAD:
+		return
+
+	health -= damage
+	if health <= 0:
+		player_state = STATE.DEAD
+		die()
+
 func pickup_summoning_item():
 	current_summoning_items += 1
 	$PickupSound.play()
