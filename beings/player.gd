@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 @export var move_speed = 500
 
+@onready var camera = $Camera2D
+
 @onready var weapon_path = $WeaponPath
 @onready var weapon_start_location = $WeaponLocation.position
 var weapon = null
@@ -17,6 +19,16 @@ var current_summoning_items : int = 0
 
 enum STATE { ALIVE, DEAD }
 var player_state = STATE.ALIVE
+
+func set_camera_limit(top, bottom, left, right):
+	print("Top: ", top)
+	print("bottom: ", bottom)
+	print("left: ", left)
+	print("right :", right)
+	camera.limit_top = top
+	camera.limit_bottom = bottom
+	camera.limit_left = left
+	camera.limit_right = right
 
 func die():
 	queue_free()
