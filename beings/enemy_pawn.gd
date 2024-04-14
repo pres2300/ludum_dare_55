@@ -8,7 +8,9 @@ extends CharacterBody2D
 @onready var sprite = $Sprite2D
 
 var can_move : bool = false
+var bounce_back : bool = false
 var target = null : set = set_target
+const bounce_distance : Vector2 = Vector2(200, 200)
 
 enum STATE { ALIVE, DEAD }
 var enemy_state = STATE.ALIVE
@@ -66,7 +68,12 @@ func _physics_process(_delta):
 		return
 
 	if can_move and is_instance_valid(target):
-		velocity = global_position.direction_to(target.get_global_position())*move_speed
+		if bounce_back:
+			velocity = Vector2.ZERO
+			global_position = global_position-(global_position.direction_to(target.get_global_position())*bounce_distance)
+			bounce_back = false
+		else:
+			velocity = global_position.direction_to(target.get_global_position())*move_speed
 		move_and_slide()
 
 func _on_visible_on_screen_notifier_2d_screen_entered():
@@ -75,3 +82,8 @@ func _on_visible_on_screen_notifier_2d_screen_entered():
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	health_bar.hide()
 	can_move = false
+
+func _on_area_2d_body_entered(body):
+	if body.is_in_group("Player"):
+		body.take_damage(5)
+		bounce_back = true
