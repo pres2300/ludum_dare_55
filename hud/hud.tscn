@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://cg56pipj6jxvo"]
+
+[ext_resource type="FontFile" uid="uid://cyo4r1idgb4cp" path="res://assets/fonts/Kenney Thick.ttf" id="1_m1lpl"]
+[ext_resource type="Script" path="res://hud/hud.gd" id="1_ouyla"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_s7jdh"]
+font = ExtResource("1_m1lpl")
+font_size = 32
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[node name="HUD" type="Node"]
+process_mode = 3
+script = ExtResource("1_ouyla")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 50
+
+[node name="Paused" type="Label" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+text = "Paused"
+label_settings = SubResource("LabelSettings_s7jdh")

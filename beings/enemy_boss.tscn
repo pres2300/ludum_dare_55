@@ -9,8 +9,8 @@
 [node name="EnemyBoss" instance=ExtResource("1_b2pi4")]
 script = ExtResource("2_uhsrq")
 projectile_scene = ExtResource("3_3pc50")
-health = 1000.0
-max_health = 1000.0
+health = 500.0
+max_health = 500.0
 move_speed = 450
 
 [node name="AttackSound" type="AudioStreamPlayer2D" parent="." index="5"]

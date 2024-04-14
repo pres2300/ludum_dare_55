@@ -16,10 +16,13 @@ extends Node
 @export var enemy_scene : PackedScene
 @export var boss_scene : PackedScene
 
+@onready var hud = $CanvasLayer/HUD
+
 const required_summoning_items : int = 5
 const num_summoning_item_spawns : int = 5
 const num_enemy_spawns : int = 2
 var placed_summoning_items : int = 0
+
 
 var summoning_circle = null
 var player = null
