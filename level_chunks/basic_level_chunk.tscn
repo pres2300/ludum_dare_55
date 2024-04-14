@@ -3,7 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://dkpdfvq2dvo61" path="res://assets/backgrounds/background.png" id="1_ofeii"]
 [ext_resource type="Script" path="res://level_chunks/basic_level_chunk.gd" id="1_pvgkk"]
 
-[node name="BasicLevelChunk" type="Node2D"]
+[node name="BasicLevelChunk" type="Node2D" groups=["LevelChunk"]]
+z_index = -1
 script = ExtResource("1_pvgkk")
 
 [node name="Background" type="Sprite2D" parent="."]

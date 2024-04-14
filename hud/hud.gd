@@ -20,6 +20,9 @@ func increment_summon_items_collected():
 	var new_value = int(summon_items_collected.text) + 1
 	summon_items_collected.text = str(new_value)
 
+func reset_summon_items_collected():
+	summon_items_collected.text = str(0)
+
 func set_player_health(value : float):
 	if health_bar == null:
 		return

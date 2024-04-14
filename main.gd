@@ -25,7 +25,7 @@ var summoning_circle = null
 var player = null
 
 # Level stats
-var current_level : int = 1
+var current_level : int = 0
 
 func spawn_boss():
 	var boss = boss_scene.instantiate()
@@ -45,9 +45,12 @@ func _player_health_changed(health):
 	hud.set_player_health(health)
 
 func _next_level():
-	print("Next level")
+	current_level += 1
 
-func _ready():
+	# Remove old level chunks
+	for chunk in get_tree().get_nodes_in_group("LevelChunk"):
+		chunk.queue_free()
+
 	# Build the level
 	var level_width = randi_range(min_level_width, max_level_width)
 	var level_height = randi_range(min_level_height, max_level_height)
@@ -94,14 +97,19 @@ func _ready():
 			current_chunk += 1
 
 	# Add the player
-	player = player_scene.instantiate()
-	add_child(player)
+	if player == null:
+		player = player_scene.instantiate()
+		add_child(player)
+		player.summoning_item_collected.connect(_summoning_item_collected)
+		player.player_health_changed.connect(_player_health_changed)
+		player.add_weapon(pistol)
+		hud.set_player_health(player.health)
 	player.global_position = player_spawn_position
-	player.add_weapon(pistol)
 	player.set_camera_limit(0, 1080*level_height, 0, 1920*level_width)
-	player.summoning_item_collected.connect(_summoning_item_collected)
-	player.player_health_changed.connect(_player_health_changed)
-	hud.set_player_health(player.health)
+	player.current_summoning_items = 0
+
+	hud.set_level_number(current_level)
+	hud.reset_summon_items_collected()
 
 	# Add rondomly placed summoning items
 	for i in range(num_summoning_item_spawns):
@@ -117,6 +125,9 @@ func _ready():
 		var random_pos = Vector2(randi_range(0, item_spawn_max_position.x), randi_range(0, item_spawn_max_position.y))
 		enemy.global_position = random_pos
 		enemy.set_target(player)
+
+func _ready():
+	_next_level()
 
 func _spawn_boss():
 	call_deferred("spawn_boss")
