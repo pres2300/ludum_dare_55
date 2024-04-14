@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://l4joj2djtev4"]
+[gd_scene load_steps=7 format=3 uid="uid://l4joj2djtev4"]
 
 [ext_resource type="PackedScene" uid="uid://51g0cpbtfbup" path="res://beings/enemy_pawn.tscn" id="1_b2pi4"]
 [ext_resource type="Script" path="res://beings/enemy_boss.gd" id="2_uhsrq"]
 [ext_resource type="PackedScene" uid="uid://cekshjyaheo7i" path="res://weapons/range_weapons/flame_projectile.tscn" id="3_3pc50"]
 [ext_resource type="AudioStream" uid="uid://dh5avwbdseri2" path="res://assets/sounds/flame_throw.mp3" id="4_n51n7"]
+[ext_resource type="Texture2D" uid="uid://cv4wa83r3725l" path="res://assets/sprites/enemy_boss.png" id="4_wbgwx"]
 [ext_resource type="AudioStream" uid="uid://ctuh1ercqisj2" path="res://assets/sounds/boss_spawn.mp3" id="5_urbxk"]
 
 [node name="EnemyBoss" instance=ExtResource("1_b2pi4")]
@@ -12,6 +13,9 @@ projectile_scene = ExtResource("3_3pc50")
 health = 500.0
 max_health = 500.0
 move_speed = 450
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("4_wbgwx")
 
 [node name="AttackSound" type="AudioStreamPlayer2D" parent="." index="5"]
 stream = ExtResource("4_n51n7")
