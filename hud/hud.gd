@@ -21,8 +21,6 @@ func increment_summon_items_collected():
 	summon_items_collected.text = str(new_value)
 
 func set_player_health(value : float):
-	var health = value
-
 	if health_bar == null:
 		return
 
