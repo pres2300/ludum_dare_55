@@ -19,6 +19,8 @@ texture = ExtResource("4_wbgwx")
 
 [node name="AttackSound" type="AudioStreamPlayer2D" parent="." index="5"]
 stream = ExtResource("4_n51n7")
+attenuation = 1e-05
 
 [node name="SpawnSound" type="AudioStreamPlayer2D" parent="." index="7"]
 stream = ExtResource("5_urbxk")
+attenuation = 1e-05
