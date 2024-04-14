@@ -47,11 +47,19 @@ theme_override_constants/margin_top = 760
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 40
+
+[node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-focus_next = NodePath(".")
+focus_neighbor_left = NodePath("../ExitButton")
+focus_neighbor_right = NodePath("../ExitButton")
+focus_next = NodePath("../ExitButton")
 theme_override_colors/font_color = Color(0.670588, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0.670588, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -59,6 +67,23 @@ theme_override_constants/outline_size = 3
 theme_override_fonts/font = ExtResource("1_7w7o5")
 theme_override_font_sizes/font_size = 48
 text = "START"
+
+[node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../StartButton")
+focus_neighbor_right = NodePath("../StartButton")
+focus_next = NodePath("../StartButton")
+theme_override_colors/font_color = Color(0.670588, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.670588, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("1_7w7o5")
+theme_override_font_sizes/font_size = 48
+text = "EXIT
+"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
@@ -69,4 +94,5 @@ texture = ExtResource("2_c6xjx")
 position = Vector2(951, 567)
 texture = ExtResource("3_ojeaa")
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
