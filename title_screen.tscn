@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://c5t8oa0jnaj57"]
+
+[ext_resource type="FontFile" uid="uid://cyo4r1idgb4cp" path="res://assets/fonts/Kenney Thick.ttf" id="1_7w7o5"]
+[ext_resource type="Script" path="res://title_screen.gd" id="1_wyv5e"]
+[ext_resource type="Texture2D" uid="uid://dkpdfvq2dvo61" path="res://assets/backgrounds/background.png" id="2_c6xjx"]
+[ext_resource type="Texture2D" uid="uid://pj478jq6pa02" path="res://assets/sprites/summoning_circle.png" id="3_ojeaa"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sj2j6"]
+font = ExtResource("1_7w7o5")
+font_size = 64
+font_color = Color(0.670588, 0, 0, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wyv5e")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 120
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "DEPTHS OF HELL"
+label_settings = SubResource("LabelSettings_sj2j6")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 760
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_next = NodePath(".")
+theme_override_colors/font_color = Color(0.670588, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.670588, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("1_7w7o5")
+theme_override_font_sizes/font_size = 48
+text = "START"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(960, 540)
+texture = ExtResource("2_c6xjx")
+
+[node name="SummoningCircle" type="Sprite2D" parent="."]
+position = Vector2(951, 567)
+texture = ExtResource("3_ojeaa")
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/Button" to="." method="_on_button_pressed"]

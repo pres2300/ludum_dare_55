@@ -13,8 +13,14 @@ extends Node
 @export var pistol : PackedScene
 @export var enemy_scene : PackedScene
 @export var boss_scene : PackedScene
+@export var game_over_scene : PackedScene
 
+@onready var canvas_layer = $CanvasLayer
 @onready var hud = $CanvasLayer/HUD
+
+@onready var summoning_items = $SummoningItems
+@onready var enemies = $Enemies
+@onready var level_chunks = $LevelChunks
 
 const required_summoning_items : int = 5
 const num_summoning_item_spawns : int = 5
@@ -29,7 +35,7 @@ var current_level : int = 0
 
 func spawn_boss():
 	var boss = boss_scene.instantiate()
-	add_child(boss)
+	enemies.add_child(boss)
 	boss.set_target(player)
 	boss.global_position = summoning_circle.boss_spawn_location.global_position
 	boss.boss_dead.connect(_show_portal)
@@ -42,23 +48,25 @@ func spawn_enemies(level : int, spawn_max_position : Vector2):
 	# Add randomly placed enemies
 	for i in range(num_enemy_spawns*level):
 		var enemy = enemy_scene.instantiate()
-		add_child(enemy)
+		enemies.add_child(enemy)
 		var random_pos = Vector2(randi_range(0, spawn_max_position.x), randi_range(0, spawn_max_position.y))
 		enemy.global_position = random_pos
 		enemy.set_target(player)
-
-func _summoning_item_collected():
-	hud.increment_summon_items_collected()
-
-func _player_health_changed(health):
-	hud.set_player_health(health)
 
 func next_level():
 	current_level += 1
 
 	# Remove old level chunks
-	for chunk in get_tree().get_nodes_in_group("LevelChunk"):
+	for chunk in level_chunks.get_children():
 		chunk.queue_free()
+
+	# Remove old enemies
+	for enemy in enemies.get_children():
+		enemy.queue_free()
+
+	# Remove old items
+	for item in summoning_items.get_children():
+		item.queue_free()
 
 	# Build the level
 	var level_width = randi_range(min_level_width, max_level_width)
@@ -83,14 +91,14 @@ func next_level():
 			var add_chunk = null
 			if current_chunk == spawn_chunk:
 				add_chunk = spawn_chunk_scene.instantiate()
-				add_child(add_chunk)
+				level_chunks.add_child(add_chunk)
 				current_chunk_position.x = i*add_chunk.bg.texture.get_width()
 				current_chunk_position.y = j*add_chunk.bg.texture.get_height()
 				add_chunk.position = current_chunk_position
 				player_spawn_position = add_chunk.player_spawn_point.global_position
 			elif current_chunk == exit_chunk:
 				add_chunk = exit_chunk_scene.instantiate()
-				add_child(add_chunk)
+				level_chunks.add_child(add_chunk)
 				current_chunk_position.x = i*add_chunk.bg.texture.get_width()
 				current_chunk_position.y = j*add_chunk.bg.texture.get_height()
 				add_chunk.position = current_chunk_position
@@ -98,7 +106,7 @@ func next_level():
 				summoning_circle.spawn_boss.connect(_spawn_boss)
 			else:
 				add_chunk = basic_chunk_scene.instantiate()
-				add_child(add_chunk)
+				level_chunks.add_child(add_chunk)
 				current_chunk_position.x = i*add_chunk.bg.texture.get_width()
 				current_chunk_position.y = j*add_chunk.bg.texture.get_height()
 				add_chunk.position = current_chunk_position
@@ -111,6 +119,7 @@ func next_level():
 		add_child(player)
 		player.summoning_item_collected.connect(_summoning_item_collected)
 		player.player_health_changed.connect(_player_health_changed)
+		player.player_died.connect(_game_over)
 		player.add_weapon(pistol)
 		hud.set_player_health(player.health)
 	player.global_position = player_spawn_position
@@ -123,14 +132,40 @@ func next_level():
 	# Add rondomly placed summoning items
 	for i in range(num_summoning_item_spawns):
 		var summoning_item = summoning_item_scene.instantiate()
-		add_child(summoning_item)
+		summoning_items.add_child(summoning_item)
 		var random_pos = Vector2(randi_range(0, spawn_max_position.x), randi_range(0, spawn_max_position.y))
 		summoning_item.global_position = random_pos
 
 	spawn_enemies(current_level, spawn_max_position)
 
+func _game_over():
+	var game_over = game_over_scene.instantiate()
+	canvas_layer.add_child(game_over)
+	game_over.try_again.connect(_restart)
+	game_over.main_menu.connect(_main_menu)
+
+func _restart():
+	current_level = 0
+	call_deferred("next_level")
+	player.queue_free()
+	player = null
+
+func _main_menu():
+	get_tree().reload_current_scene()
+
+func _summoning_item_collected():
+	hud.increment_summon_items_collected()
+
+func _player_health_changed(health):
+	hud.set_player_health(health)
+
 func _ready():
-	next_level()
+	$TitleScreen.start.connect(_start_game)
+
+func _start_game():
+	hud.show()
+	$TitleScreen.queue_free()
+	call_deferred("next_level")
 
 func _next_level():
 	call_deferred("next_level")

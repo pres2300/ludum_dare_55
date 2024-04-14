@@ -41,10 +41,15 @@ func is_dead():
 	else:
 		return false
 
+func disable_collision():
+	collision.disabled = true
+
 func die():
 	player_state = STATE.DEAD
+	if weapon:
+		weapon.stop_attacking()
 	sprite.rotate(PI/2)
-	collision.disabled = true
+	call_deferred("disable_collision")
 	player_died.emit()
 
 func take_damage(damage):

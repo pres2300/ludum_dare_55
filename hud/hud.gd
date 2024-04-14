@@ -13,6 +13,14 @@ var bar_textures = {
 	"red": preload("res://assets/progress_bar/ProgressBar_Red.png"),
 }
 
+func show():
+	$MarginContainer.show()
+	$MarginContainer2.show()
+
+func hide():
+	$MarginContainer.hide()
+	$MarginContainer2.hide()
+
 func set_level_number(value : int):
 	level_number.text = str(value)
 
