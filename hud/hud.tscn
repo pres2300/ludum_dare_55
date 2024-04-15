@@ -53,20 +53,28 @@ layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/margin_left = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="LevelLabel" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer"]
+[node name="LevelLabel" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Level: "
 label_settings = SubResource("LabelSettings_5hh0i")
 
-[node name="LevelNumber" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer"]
+[node name="LevelNumber" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "1"
 label_settings = SubResource("LabelSettings_yodbg")
+
+[node name="PlayerHealth" type="TextureProgressBar" parent="MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+texture_over = ExtResource("3_nqldp")
+texture_progress = ExtResource("4_7ssig")
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -92,21 +100,3 @@ label_settings = SubResource("LabelSettings_xiegl")
 layout_mode = 2
 text = "5"
 label_settings = SubResource("LabelSettings_xiegl")
-
-[node name="MarginContainer2" type="MarginContainer" parent="."]
-visible = false
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_vertical = 8
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="PlayerHealth" type="TextureProgressBar" parent="MarginContainer2"]
-layout_mode = 2
-texture_over = ExtResource("3_nqldp")
-texture_progress = ExtResource("4_7ssig")

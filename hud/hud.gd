@@ -1,9 +1,9 @@
 extends Node
 
 @onready var paused = $MarginContainer/Paused
-@onready var level_number = $MarginContainer/MarginContainer/HBoxContainer/LevelNumber
+@onready var level_number = $MarginContainer/MarginContainer/VBoxContainer/HBoxContainer/LevelNumber
 @onready var summon_items_collected = $MarginContainer/MarginContainer2/HBoxContainer2/SummonItemsCollected
-@onready var health_bar = $MarginContainer2/PlayerHealth
+@onready var health_bar = $MarginContainer/MarginContainer/VBoxContainer/PlayerHealth
 
 var bar_textures = {
 	"green": preload("res://assets/progress_bar/ProgressBar_Green.png"),
@@ -15,11 +15,9 @@ var bar_textures = {
 
 func show():
 	$MarginContainer.show()
-	$MarginContainer2.show()
 
 func hide():
 	$MarginContainer.hide()
-	$MarginContainer2.hide()
 
 func set_level_number(value : int):
 	level_number.text = str(value)
