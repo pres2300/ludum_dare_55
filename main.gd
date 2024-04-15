@@ -5,6 +5,8 @@ extends Node
 @export var min_level_width : int = 2
 @export var min_level_height : int = 2
 
+@export var boss_spawn_delay : float = 5.0
+
 @export var exit_chunk_scene : PackedScene
 @export var spawn_chunk_scene : PackedScene
 @export var basic_chunk_scene : PackedScene
@@ -34,18 +36,24 @@ var player = null
 
 # Level stats
 var current_level : int = 0
+var bosses_defeated : int = 0
 
 func spawn_boss():
-	var boss = boss_scene.instantiate()
-	enemies.add_child(boss)
-	boss.set_target(player)
-	boss.global_position = summoning_circle.boss_spawn_location.global_position
-	boss.boss_dead.connect(_boss_dead)
+	for i in range(current_level):
+		var boss = boss_scene.instantiate()
+		enemies.add_child(boss)
+		boss.set_target(player)
+		boss.global_position = summoning_circle.boss_spawn_location.global_position
+		boss.boss_dead.connect(_boss_dead)
+		await get_tree().create_timer(boss_spawn_delay).timeout
 
 func boss_dead(item_position):
-	summoning_circle.add_portal()
-	summoning_circle.portal.next_level.connect(_next_level)
+	bosses_defeated += 1
 	spawn_health_item(item_position, 20)
+
+	if bosses_defeated == current_level:
+		summoning_circle.add_portal()
+		summoning_circle.portal.next_level.connect(_next_level)
 
 func spawn_enemies(level : int, spawn_max_position : Vector2):
 	# Add randomly placed enemies
@@ -66,6 +74,7 @@ func spawn_health_item(item_position, heal_amount=null):
 
 func next_level():
 	current_level += 1
+	bosses_defeated = 0
 
 	# Remove old level chunks
 	for chunk in level_chunks.get_children():

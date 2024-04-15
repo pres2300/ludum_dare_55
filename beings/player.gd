@@ -131,6 +131,9 @@ func get_input():
 	return Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 
 func _i_frames_done():
+	if is_dead():
+		return
+
 	player_state = STATE.ALIVE
 	enable_collision()
 
