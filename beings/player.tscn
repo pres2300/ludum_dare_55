@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dmvqukohii4bj"]
+[gd_scene load_steps=8 format=3 uid="uid://dmvqukohii4bj"]
 
 [ext_resource type="Texture2D" uid="uid://fxki243kwaaq" path="res://assets/sprites/corrupted.png" id="1_8tsdq"]
 [ext_resource type="Script" path="res://beings/player.gd" id="1_76jon"]
 [ext_resource type="AudioStream" uid="uid://cse5krjo8h3o8" path="res://assets/sounds/item_drop.mp3" id="3_bq1iq"]
 [ext_resource type="PackedScene" uid="uid://cb8ywveoe3u1a" path="res://custom_sounds/damage_taken_sound.tscn" id="4_gyfhj"]
+[ext_resource type="AudioStream" uid="uid://c7wk8j77csngk" path="res://assets/sounds/heal.mp3" id="5_ubjyy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lgq00"]
 radius = 47.0
@@ -43,5 +44,9 @@ stream = ExtResource("3_bq1iq")
 attenuation = 1e-05
 
 [node name="DamageTakenSound" parent="." instance=ExtResource("4_gyfhj")]
+
+[node name="HealSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_ubjyy")
+attenuation = 1e-05
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]

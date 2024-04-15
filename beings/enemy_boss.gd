@@ -12,7 +12,7 @@ signal boss_dead
 
 func die():
 	super()
-	boss_dead.emit()
+	boss_dead.emit(global_position)
 
 func _ready():
 	super()

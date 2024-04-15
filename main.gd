@@ -14,6 +14,7 @@ extends Node
 @export var enemy_scene : PackedScene
 @export var boss_scene : PackedScene
 @export var game_over_scene : PackedScene
+@export var health_item_scene : PackedScene
 
 @onready var canvas_layer = $CanvasLayer
 @onready var hud = $CanvasLayer/HUD
@@ -21,6 +22,7 @@ extends Node
 @onready var summoning_items = $SummoningItems
 @onready var enemies = $Enemies
 @onready var level_chunks = $LevelChunks
+@onready var items = $Items
 
 const required_summoning_items : int = 5
 const num_summoning_item_spawns : int = 5
@@ -38,11 +40,12 @@ func spawn_boss():
 	enemies.add_child(boss)
 	boss.set_target(player)
 	boss.global_position = summoning_circle.boss_spawn_location.global_position
-	boss.boss_dead.connect(_show_portal)
+	boss.boss_dead.connect(_boss_dead)
 
-func show_portal():
+func boss_dead(item_position):
 	summoning_circle.add_portal()
 	summoning_circle.portal.next_level.connect(_next_level)
+	spawn_health_item(item_position, 20)
 
 func spawn_enemies(level : int, spawn_max_position : Vector2):
 	# Add randomly placed enemies
@@ -52,6 +55,14 @@ func spawn_enemies(level : int, spawn_max_position : Vector2):
 		var random_pos = Vector2(randi_range(0, spawn_max_position.x), randi_range(0, spawn_max_position.y))
 		enemy.global_position = random_pos
 		enemy.set_target(player)
+		enemy.enemy_died.connect(_enemy_dead)
+
+func spawn_health_item(item_position, heal_amount=null):
+	var health_item = health_item_scene.instantiate()
+	items.add_child(health_item)
+	if heal_amount != null:
+		health_item.heal_amount = heal_amount
+	health_item.global_position = item_position
 
 func next_level():
 	current_level += 1
@@ -64,8 +75,12 @@ func next_level():
 	for enemy in enemies.get_children():
 		enemy.queue_free()
 
-	# Remove old items
+	# Remove old summoning items
 	for item in summoning_items.get_children():
+		item.queue_free()
+
+	# Remove old items
+	for item in items.get_children():
 		item.queue_free()
 
 	# Build the level
@@ -173,5 +188,8 @@ func _next_level():
 func _spawn_boss():
 	call_deferred("spawn_boss")
 
-func _show_portal():
-	call_deferred("show_portal")
+func _boss_dead(item_position):
+	call_deferred("boss_dead", item_position)
+
+func _enemy_dead(item_position):
+	call_deferred("spawn_health_item", item_position)

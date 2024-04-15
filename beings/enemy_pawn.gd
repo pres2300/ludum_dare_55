@@ -12,10 +12,12 @@ extends CharacterBody2D
 var can_move : bool = false
 var bounce_back : bool = false
 var target = null : set = set_target
-const bounce_distance : Vector2 = Vector2(200, 200)
+const bounce_distance : Vector2 = Vector2(400, 400)
 
 enum STATE { ALIVE, DEAD }
 var enemy_state = STATE.ALIVE
+
+signal enemy_died
 
 var bar_textures = {
 	"green": preload("res://assets/progress_bar/ProgressBar_Green.png"),
@@ -49,6 +51,7 @@ func set_target(value):
 
 func die():
 	sprite.rotate(PI/2)
+	enemy_died.emit(global_position)
 	$DieSound.play()
 	$DieSound.finished.connect(queue_free)
 
@@ -96,9 +99,16 @@ func _physics_process(_delta):
 		return
 
 	if can_move and is_instance_valid(target):
+		for i in get_slide_collision_count():
+			var collision = get_slide_collision(i)
+
+			if collision.get_collider().is_in_group("Player") and collision.get_collider().can_take_damage():
+				collision.get_collider().take_damage(5)
+				velocity = Vector2.ZERO
+				global_position = global_position+(collision.get_normal()*bounce_distance)
+				bounce_back = true
+
 		if bounce_back:
-			velocity = Vector2.ZERO
-			global_position = global_position-(global_position.direction_to(target.get_global_position())*bounce_distance)
 			bounce_back = false
 		else:
 			velocity = global_position.direction_to(target.get_global_position())*move_speed
@@ -110,8 +120,3 @@ func _on_visible_on_screen_notifier_2d_screen_entered():
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	health_bar.hide()
 	can_move = false
-
-func _on_area_2d_body_entered(body):
-	if body.is_in_group("Player"):
-		body.take_damage(5)
-		bounce_back = true

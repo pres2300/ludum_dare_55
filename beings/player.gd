@@ -7,7 +7,6 @@ extends CharacterBody2D
 @onready var effect_popup = load("res://hud/effect_popup.tscn")
 @onready var damage_sound = $DamageTakenSound
 @onready var sprite = $Sprite2D
-@onready var collision = $CollisionShape2D
 
 @onready var weapon_path = $WeaponPath
 @onready var weapon_start_location = $WeaponLocation.position
@@ -22,7 +21,7 @@ var health = 100
 # Objective counters
 var current_summoning_items : int = 0
 
-enum STATE { ALIVE, DEAD }
+enum STATE { ALIVE, HURT, DEAD }
 var player_state = STATE.ALIVE
 
 signal summoning_item_collected
@@ -42,7 +41,10 @@ func is_dead():
 		return false
 
 func disable_collision():
-	collision.disabled = true
+	$CollisionShape2D.disabled = true
+
+func enable_collision():
+	$CollisionShape2D.disabled = false
 
 func die():
 	player_state = STATE.DEAD
@@ -52,10 +54,26 @@ func die():
 	call_deferred("disable_collision")
 	player_died.emit()
 
+func heal(amount):
+	if health + amount > 100:
+		health = 100
+	else:
+		health += amount
+
+	$HealSound.play()
+	player_health_changed.emit(health)
+	show_effect("Health", amount)
+
+func can_take_damage():
+	return player_state == STATE.ALIVE
+
 func take_damage(damage):
 	if is_dead():
 		return
 
+	disable_collision()
+	player_state = STATE.HURT
+	get_tree().create_timer(0.5).timeout.connect(_i_frames_done)
 	damage_sound.play_random_sound()
 	health -= damage
 	player_health_changed.emit(health)
@@ -111,6 +129,10 @@ func show_effect(type, value):
 
 func get_input():
 	return Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+
+func _i_frames_done():
+	player_state = STATE.ALIVE
+	enable_collision()
 
 func _unhandled_input(event):
 	if is_dead():

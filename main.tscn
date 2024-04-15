@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dnx1u4ln3jef0"]
+[gd_scene load_steps=14 format=3 uid="uid://dnx1u4ln3jef0"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_epk5f"]
 [ext_resource type="PackedScene" uid="uid://bhrysnpsev661" path="res://level_chunks/exit_level_chunk.tscn" id="2_dw43q"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://l4joj2djtev4" path="res://beings/enemy_boss.tscn" id="9_ije3i"]
 [ext_resource type="PackedScene" uid="uid://cg56pipj6jxvo" path="res://hud/hud.tscn" id="10_bt7ae"]
 [ext_resource type="PackedScene" uid="uid://de1gp352vgc71" path="res://hud/game_over_screen.tscn" id="10_uvbbj"]
+[ext_resource type="PackedScene" uid="uid://dedojahs0njtc" path="res://items/health_item.tscn" id="11_a0nv0"]
 [ext_resource type="PackedScene" uid="uid://c5t8oa0jnaj57" path="res://title_screen.tscn" id="11_ek8t8"]
 
 [node name="Main" type="Node"]
@@ -24,6 +25,7 @@ pistol = ExtResource("7_p3ta8")
 enemy_scene = ExtResource("8_foe20")
 boss_scene = ExtResource("9_ije3i")
 game_over_scene = ExtResource("10_uvbbj")
+health_item_scene = ExtResource("11_a0nv0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -36,3 +38,5 @@ game_over_scene = ExtResource("10_uvbbj")
 [node name="Enemies" type="Node" parent="."]
 
 [node name="LevelChunks" type="Node" parent="."]
+
+[node name="Items" type="Node" parent="."]
