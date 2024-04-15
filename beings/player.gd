@@ -41,17 +41,17 @@ func is_dead():
 		return false
 
 func disable_collision():
-	$CollisionShape2D.disabled = true
+	$CollisionShape2D.set_deferred("disabled", true)
 
 func enable_collision():
-	$CollisionShape2D.disabled = false
+	$CollisionShape2D.set_deferred("disabled", false)
 
 func die():
 	player_state = STATE.DEAD
 	if weapon:
 		weapon.stop_attacking()
 	sprite.rotate(PI/2)
-	call_deferred("disable_collision")
+	disable_collision()
 	player_died.emit()
 
 func heal(amount):

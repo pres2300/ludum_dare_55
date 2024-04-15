@@ -16,6 +16,8 @@ func die():
 
 func _ready():
 	super()
+	is_boss = true
+	can_move = true
 	attack_timer.wait_time = 1.0/attack_rate
 	attack_timer.process_mode = Node.PROCESS_MODE_PAUSABLE
 	$SpawnSound.play()

@@ -9,6 +9,7 @@ extends CharacterBody2D
 @onready var effect_popup_location = $EffectPopupLocation.position
 @onready var effect_popup = load("res://hud/effect_popup.tscn")
 
+var is_boss : bool = false
 var can_move : bool = false
 var bounce_back : bool = false
 var target = null : set = set_target
@@ -119,4 +120,5 @@ func _on_visible_on_screen_notifier_2d_screen_entered():
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	health_bar.hide()
-	can_move = false
+	if not is_boss:
+		can_move = false
