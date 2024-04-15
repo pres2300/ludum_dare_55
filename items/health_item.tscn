@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dedojahs0njtc"]
+
+[ext_resource type="Texture2D" uid="uid://buqvyy8ct2nfd" path="res://assets/sprites/health_item.png" id="1_8m7wn"]
+[ext_resource type="Script" path="res://items/health_item.gd" id="1_r6wv7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j0ejk"]
+size = Vector2(28, 28)
+
+[node name="HealthItem" type="Area2D"]
+collision_layer = 8
+script = ExtResource("1_r6wv7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_8m7wn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_j0ejk")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
